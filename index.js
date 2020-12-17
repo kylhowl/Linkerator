@@ -15,12 +15,20 @@ const path = require('path');
 server.use(express.static(path.join(__dirname, 'build')));
 
 // here's our API
-server.use('/api', require('./routes'));
+const apiRouter = require('./routes');
+server.use('/api', apiRouter);
+
+server.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).send({message : "Internal Server Error, blame Kyle"})
+})
 
 // by default serve up the react app if we don't recognize the route
 server.use((req, res, next) => {
   res.sendFile(path.join(__dirname, 'build', 'index.html'))
 });
+
+
 
 // bring in the DB connection
 const { client } = require('./db');

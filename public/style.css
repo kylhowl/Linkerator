@@ -1,0 +1,59 @@
+.sortOptions {
+  align-items: flex-end;
+  color: yellow;
+  text-align: end;  
+}
+
+
+body { 
+  height: 100vh;
+  background-image: url('/images/pexels-aditya-aiyar-1407305.jpg');
+  background-size: cover;
+  background-repeat: no-repeat; 
+}
+
+#root {
+  
+  overflow-y: auto;
+  background-color: hsla(100, 85%, 30%, 0.4)
+}
+
+/* .marquee {
+  border: 10px solid transparent;
+  border-image: url('/images/bananaborder.png') 33% round;   
+} */
+
+.link-card {
+  margin-top: 2px;
+  margin-bottom: 2px;
+}
+
+.dropdown-menu  {
+  background-color: #FFC107 !important
+}
+
+::-webkit-scrollbar {
+  width: 15px; 
+}
+
+::-webkit-scrollbar-thumb {
+  background-image: url('./images/favicon.ico');
+}
+
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 10px #FFC107;
+  border-radius: 10px;
+}
+
+button {
+  margin-bottom: 2px;
+}
+
+
+
+
+
+
+
+
+
