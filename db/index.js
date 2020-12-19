@@ -123,6 +123,8 @@ async function createLink(fields = {}) {
 async function createTag(linkId, tags) {
   
   const insertValues = tags.map((_, index) => `$${index + 1}`).join(`), (`);
+  tags = tags.map((tag)=> {tag = tag.toUpperCase(); return tag});
+  
   try {
     const { rows : tagIds } = await client.query(`
     INSERT INTO tag(tag_name)
@@ -183,7 +185,7 @@ async function updateLink(fields) {
     return await getAllLinks();
 
   } catch (err) {
-    console.log('error in updateLink')
+    
     throw err;
   }
 }

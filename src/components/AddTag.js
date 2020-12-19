@@ -22,7 +22,7 @@ const AddTag = ({ updateLink, setUpdateLink, setLinks, setTags, setSearchLinks, 
         let tagArr = tag.split(' ') // breaks search string into array using spaces
         tagArr.map((tag) => tag.trim()) // removes white space from front/end of strings
         tagArr = tagArr.filter(tag=> tag); // removes extra spaces from result array.
-
+        tagArr = tagArr.map((tag)=> tag.toUpperCase());
         const results = await addTags(linkId, tagArr)
         
         if (results.links) {

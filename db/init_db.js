@@ -68,16 +68,16 @@ async function populateInitialData() {
         INSERT INTO link 
           (url, comment)
         VALUES
-          ('www.google.com','Google'),
-          ('www.yahoo.com','Yahoo'),
-          ('http://www.bing.com','Bing')
+          ('www.google.com','Google is a massive search engine, with an account you have access to email, cloud servers, and many more features.'),
+          ('www.yahoo.com','Yahoo is a search engine with email service, news, and more features.'),
+          ('http://www.bing.com','Bing is a Microsofts search engine that is acts like many other search engines with account features.')
         RETURNING "linkId";
     `)
     console.log('Links ids inserted', links);
 
     let { rows : tags } = await client.query(`
       INSERT INTO tag (tag_name)
-      VALUES ('search'), ('maps'), ('news'), ('shopping')
+      VALUES ('SEARCH'), ('MAPS'), ('NEWS'), ('SHOPPING')
       RETURNING *;
     `)
     console.log('Tag ids inserted', tags)

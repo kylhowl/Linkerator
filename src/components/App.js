@@ -16,8 +16,6 @@ const App = () => {
   const [ searchLinks, setSearchLinks ] = useState([]);
   const [ updateLink, setUpdateLink ] = useState('');
 
-  // console.log('setlinks:', setLinks);
-
   useEffect(() => {
     getLinks()
       .then(response => {

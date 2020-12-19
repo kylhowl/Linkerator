@@ -18,25 +18,21 @@ const Create = ({ setBulletinMsg, links ,setLinks, setTags, tagState }) => {
         tags = tag.split(' ') // breaks search string into array using spaces
         tags.map((tag) => tag.trim()) // removes white space from front/end of strings
         tags = tags.filter(tag=> tag); // removes extra spaces from result array.
+        tags = tags.map((tag)=> tag.toUpperCase());
         tags = [...new Set(tags)] // eliminates duplicate tag submission
         // place code for validation on url validation-express
         } 
 
         if (validator.isURL(newLink)) {
             let patt =/[^.]*\.[^.]{2,3}(?:\.[^.]{2,3})?$/mg ; // regex checks for tdr
-            console.log(patt.test(newLink), newLink);
-            console.log(typeof patt.test(newLink))
-
-            if ( patt.test(newLink) === false ) { 
-                console.log('not valid url') 
             
+            if ( patt.test(newLink) === false ) {    
             setBulletinMsg(`${newLink} is not a valid url, please try again!`);
-            console.log('failed 2nd test', newLink);
+            
             return
             }
         } else { 
             setBulletinMsg(`${newLink} is not a valid url, please try again!`);
-            console.log('failed 1st test', newLink)
             return
         }
 

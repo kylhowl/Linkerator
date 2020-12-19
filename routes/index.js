@@ -35,11 +35,10 @@ apiRouter.get(`/links`, async (req, res, next) => {
 
 apiRouter.post(`/links`, async (req, res, next) => {
   const body = req.body;
-  // console.log('req:', req)
-  console.log('body', body)
+
   try {
     const results = await createLink(body);
-    console.log('results from creating link', results);
+    
     res.send(results)
   } catch (err) {
     next(err);
@@ -68,7 +67,6 @@ apiRouter.patch(`/links/:linkId`, async (req, res, next) => {
     const results = await updateLink(body)
     res.send(results);
   } catch (err) {
-    console.log('error!!!')
     next(err);
   }
 })
