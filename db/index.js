@@ -23,7 +23,8 @@ async function getAllLinks() {
 
     const { rows : allTags }  = await client.query(`
     SELECT tag_name
-    FROM tag;
+    FROM tag
+    WHERE "isActive"=true;
   `)
   // build return object
   const tagArray = allTags.map((tag)=> tag.tag_name);
@@ -40,10 +41,11 @@ async function _getTags() {
   try {
      
       const { rows : tags } = await client.query(`
-        SELECT *
+        SELECT tag."tagId", tag_name, "linkId"
         FROM tag
         INNER JOIN link_tag
-          on link_tag."tagId"=tag."tagId";
+          on link_tag."tagId"=tag."tagId"
+        WHERE "isActive"=true;
       `);
 
     return tags
@@ -54,7 +56,7 @@ async function _getTags() {
 }
 
 async function getTagLinks(tagName) {
-  console.log('tag name', tagName)
+  
   try {
     const tags = await _getTags();
     
@@ -108,7 +110,7 @@ async function createLink(fields = {}) {
   }
 
   if (tags.length) {
-    await _createTag(link.linkId, tags);
+    await createTag(link.linkId, tags);
   }
 
   link.tags = tags;
@@ -118,7 +120,7 @@ async function createLink(fields = {}) {
   }
 }
 
-async function _createTag(linkId, tags) {
+async function createTag(linkId, tags) {
   
   const insertValues = tags.map((_, index) => `$${index + 1}`).join(`), (`);
   try {
@@ -126,10 +128,10 @@ async function _createTag(linkId, tags) {
     INSERT INTO tag(tag_name)
     VALUES (${insertValues})
     ON CONFLICT (tag_name)
-    DO UPDATE SET tag_name = tag.tag_name
+    DO UPDATE SET "isActive" = true
     RETURNING *;
   `, tags );
-  // figure out solution for duplicate tag insertion at once
+  
   const tagIdArray = tagIds.map((tag)=> tag.tagId);
   
   const insertLinkTags = tagIdArray.map((_,index) => `$1,$${index+2}`).join(`), (`);
@@ -159,6 +161,7 @@ async function updateLink(fields) {
   
   try {
     if ( fields.comment ) {   // does not run if nothing to update in link table
+      
       await client.query(`
       UPDATE link
       SET 
@@ -174,7 +177,7 @@ async function updateLink(fields) {
     }
 
     if (tags.length) {  // does not run if there is no update to tags for link
-      await _createTag(linkId, tags)
+      await _deleteTags(linkId, tags) // update to delete tags
     }
     
     return await getAllLinks();
@@ -185,12 +188,66 @@ async function updateLink(fields) {
   }
 }
 
+async function addTags(linkId, tags) {
+
+  try {
+  await createTag(linkId, tags)
+
+  return await getAllLinks()
+
+  } catch (err) {
+    throw err
+  }
+}
+
+async function _deleteTags(linkId, tags) {
+
+  const selectValues = tags.map((_,index)=> `$${index+1}`).join(', ')
+  
+  try {
+    let {rows : tagIds} = await client.query(`
+      SELECT "tagId"
+      FROM tag
+        WHERE tag_name IN (${selectValues});
+    `, tags);
+
+    const selectValues2 = tags.map((_,index)=> `$${index+2}`).join(', ');
+    tagIds = tagIds.map((tag)=> tag.tagId);
+    
+    await client.query(`
+      DELETE FROM link_tag
+        WHERE "linkId"=$1 AND "tagId" IN (${selectValues2})
+    `,[linkId, ...tagIds]);
+
+    const { rows : tagIdObj } = await client.query(`
+      SELECT "tagId"
+      FROM link_tag
+      WHERE "tagId" IN (${selectValues})
+    `, tagIds);
+
+    const activeTags = tagIdObj.map((tag) => tag.tagId)
+    for (let id of tagIds) {
+      if (!activeTags.find((tagId)=> tagId === id )) {
+        await client.query(`
+          UPDATE tag
+          SET "isActive"=$1
+          WHERE "tagId"=$2;
+        `,[false, id])
+      }
+    }
+
+  } catch (err) {
+    throw (err)
+  }
+}
+
 // export
 module.exports = {
   client,
   getAllLinks,
   getTagLinks,
   createLink,
-  updateLink
+  updateLink,
+  addTags,
   // db methods
 }

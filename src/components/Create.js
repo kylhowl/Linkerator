@@ -81,7 +81,7 @@ const Create = ({ setBulletinMsg, links ,setLinks, setTags, tagState }) => {
                         <Form.Control size='sm' type='text' placeholder='google, shopping, bananas, free, funny, ...etc' onChange={e=> setTagStr(e.target.value)} autoComplete="off"/>
                     </Col>
                 </Form.Group>
-                <Button size='sm' variant='primary' type='submit'>ADD LINK</Button>
+                <Button size='sm' variant='warning' type='submit'>ADD LINK</Button>
                 {'    '}
                 <Button size='sm' variant='secondary' type='reset'>CLEAR</Button>
             </Form>

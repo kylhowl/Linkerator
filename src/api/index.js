@@ -35,9 +35,21 @@ export async function searchTags(tag) {
 
 export async function updateCount(linkId) {
   try {
-    const { data } = await axios.patch(`api/links/${linkId}`, {updateCount : true})
+    const { data } = await axios.patch(`api/links/${linkId}`, {updateCount : true});
     
-    return data
+    return data;
+  } catch (err) {
+    throw err
+  }
+}
+
+export async function editLink(body) {
+
+  const { linkId, comment, tags } = body;
+
+  try {
+    const { data } = await axios.patch(`api/links/${linkId}`, { comment , tags });
+    return data;
   } catch (err) {
     throw err
   }
@@ -47,8 +59,8 @@ export async function addTags(linkId, tags = []) {
   
   if (!tags.length) { return { message: 'You forgot the tag(s)!'} }
   try {
-    const { data } = await axios.patch(`api/links/${linkId}`, {tags})
-    return data
+    const { data } = await axios.post(`api/links/${linkId}`, {tags});
+    return data;
   } catch (err) {
     throw err
   }

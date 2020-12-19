@@ -61,7 +61,7 @@ const Search = ( { links, setSearchLinks, setBulletinMsg } ) => {
                     If it's there, we'll find it. Unless it's the missing link.
                 </Form.Text>
             </Form.Group>
-            <Button size='sm' variant='primary' type='submit'>SEARCH</Button>            
+            <Button size='sm' variant='warning' type='submit'>SEARCH</Button>            
         </Form>
         </Container>
     )

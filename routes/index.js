@@ -1,9 +1,10 @@
-const { default: Axios } = require('axios');
+
 const { 
   getAllLinks,
   getTagLinks,
   createLink,
-  updateLink
+  updateLink,
+  addTags
 } = require('../db');
 
 const apiRouter = require('express').Router();
@@ -23,9 +24,9 @@ apiRouter.get(`/tags/:tagName/links`, async (req, res, next) => {
 
 apiRouter.get(`/links`, async (req, res, next) => {
   try {
-    // console.log("Trying to get all the links")
+    
     const results = await getAllLinks();
-    // console.log('results in routes', results);
+    
     res.send(results);
   } catch (err) {
     next(err);
@@ -45,6 +46,19 @@ apiRouter.post(`/links`, async (req, res, next) => {
   }
 
 });
+
+apiRouter.post('/links/:linkId', async (req, res, next) => {
+  const { linkId } = req.params;
+  const { tags } = req.body;
+
+  try {
+    const results = await addTags(linkId, tags);
+    res.send(results);
+  } catch (err) {
+    console.error('Something went wrong creating Tags', err);
+    next(err);
+  }
+})
 
 apiRouter.patch(`/links/:linkId`, async (req, res, next) => {
   const { linkId } = req.params;

@@ -39,9 +39,9 @@ const App = () => {
         <TagBar tags={tags} setBulletinMsg={setBulletinMsg} setSearchLinks={setSearchLinks}/>         
         {searchLinks.length
           ? 
-        <LinkBody links={searchLinks} setLinks={setSearchLinks} setBulletinMsg={setBulletinMsg} setSearchLinks={setSearchLinks} setUpdateLink={setUpdateLink}/> 
+        <LinkBody links={searchLinks} setLinks={setLinks} setBulletinMsg={setBulletinMsg} setSearchLinks={setSearchLinks} setUpdateLink={setUpdateLink} updateLink={updateLink} searchLinks={searchLinks} setTags={setTags}/> 
           : 
-        <LinkBody links={links} setLinks={setLinks} setBulletinMsg={setBulletinMsg} setSearchLinks={setSearchLinks} setUpdateLink={setUpdateLink} />}
+        <LinkBody links={links} setLinks={setLinks} setBulletinMsg={setBulletinMsg} setSearchLinks={setSearchLinks} setUpdateLink={setUpdateLink} updateLink={updateLink} searchLinks={searchLinks} setTags={setTags} />}
         <Col sm='3' className='mh-100' style={{overflowY:'auto'}} >
           <Search links={links} setSearchLinks={setSearchLinks} setBulletinMsg={setBulletinMsg}/>
           <br/>

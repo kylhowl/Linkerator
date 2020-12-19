@@ -41,7 +41,8 @@ async function buildTables() {
     await client.query(`
       CREATE TABLE tag(
         "tagId" SERIAL PRIMARY KEY,
-        tag_name VARCHAR(255) UNIQUE NOT NULL
+        tag_name VARCHAR(255) UNIQUE NOT NULL,
+        "isActive" BOOLEAN  NOT NULL DEFAULT true
       );
     `);
     console.log('Created tag table');
