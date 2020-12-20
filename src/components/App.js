@@ -30,10 +30,10 @@ const App = () => {
 
   return (
     <Container className='main-container vh-100' fluid style={{overflowY : 'auto'}}>
-      <Row style={{ height : '23vh'}}>
+      <Row style={{ maxHeight : '23vh', minHeight : '17vh'}}>
         <Heading bulletinMsg={bulletinMsg} />
       </Row>
-      <Row noGutters={false} style={{ height : '73vh'}} >
+      <Row className='h-100' noGutters={false} style={{ maxHeight : '80vh'}} >
         <TagBar tags={tags} setBulletinMsg={setBulletinMsg} setSearchLinks={setSearchLinks}/>         
         {searchLinks.length
           ? 
