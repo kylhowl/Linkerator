@@ -29,11 +29,11 @@ const App = () => {
   },[]);
 
   return (
-    <Container className='main-container vh-100' fluid style={{overflowY : 'hidden'}}>
-      <Row style={{ height : '18vh'}}>
+    <Container className='main-container vh-100' fluid style={{overflowY : 'auto'}}>
+      <Row style={{ height : '23vh'}}>
         <Heading bulletinMsg={bulletinMsg} />
       </Row>
-      <Row noGutters={false} style={{ height : '80vh'}} >
+      <Row noGutters={false} style={{ height : '73vh'}} >
         <TagBar tags={tags} setBulletinMsg={setBulletinMsg} setSearchLinks={setSearchLinks}/>         
         {searchLinks.length
           ? 
@@ -47,7 +47,7 @@ const App = () => {
         </Col>
       </Row>
       <Row className='text-warning' style={{ height : '2vh'}}>
-        <Col className='col-md-6 offset-md-3' style={{textAlign : 'center'}}>BANANAS, BANANAS, BANANAS</Col>
+        <Col className='text-center w-100'  >BANANAS, BANANAS, BANANAS </Col>
       </Row>
     </Container>  
   );

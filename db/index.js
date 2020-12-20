@@ -1,7 +1,7 @@
 // Connect to DB
 const { Client } = require('pg');
 const DB_NAME = 'kylho:Kory78@localhost:5432/linkeratorDB'
-const DB_URL = process.env.DATABASE_URL || process.env.HEROKU_POSTGRESQL_MAUVE_URL || `postgres://${ DB_NAME }`;
+const DB_URL =  process.env.HEROKU_POSTGRESQL_MAUVE_URL || process.env.DATABASE_URL || `postgres://${ DB_NAME }`;
 const client = new Client(DB_URL);
 
 // database methods
